@@ -14,7 +14,7 @@ import { assignDeep, randomId } from '../utils/utils';
 import { clone } from '../utils/jsonUtils';
 import { DEFAULT_TABLE_PAGE_SIZE } from '../components/constants';
 import { TopicTabId } from '../components/pages/topics/Topic.Details';
-import { GetAclsRequest, AclRequestDefault, EncodingType } from './restInterfaces';
+import {GetAclsRequest, AclRequestDefault, EncodingType, CustomMessageType} from './restInterfaces';
 import { ConnectTabKeys } from '../components/pages/connect/Overview';
 
 const settingsName = 'uiSettings-v3';
@@ -130,6 +130,8 @@ export class TopicDetailsSettings {
     @observable aclPageSize = 20;
 
     @observable produceRecordEncoding = 'json' as EncodingType;
+
+    @observable produceCustomMessage = 'ukTerritory' as CustomMessageType;
 
     @observable quickSearch = '';
 }

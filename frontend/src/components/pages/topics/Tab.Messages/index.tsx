@@ -208,7 +208,7 @@ export class TopicMessageView extends Component<TopicMessageViewProps> {
                 <Label text="Start Offset" style={{ ...spaceStyle }}>
                     <InputGroup compact style={{ display: 'inline-block', width: 'auto' }}>
                         <Select<PartitionOffsetOrigin> value={searchParams.offsetOrigin} onChange={e => searchParams.offsetOrigin = e} size="middle"
-                            dropdownMatchSelectWidth={false} style={{ width: '9em' }}
+                                                       dropdownMatchSelectWidth={false} style={{ width: '9em' }}
                         >
                             <Option value={PartitionOffsetOrigin.End}>Newest</Option>
                             <Option value={PartitionOffsetOrigin.EndMinusResults}>Newest<span style={{ opacity: '0.9' }}>-{searchParams.maxResults}</span></Option>
@@ -219,8 +219,8 @@ export class TopicMessageView extends Component<TopicMessageViewProps> {
                         {
                             searchParams.offsetOrigin == PartitionOffsetOrigin.Custom &&
                             <Input style={{ width: '7.5em' }} maxLength={20}
-                                value={searchParams.startOffset} onChange={e => searchParams.startOffset = +e.target.value}
-                                disabled={searchParams.offsetOrigin != PartitionOffsetOrigin.Custom} />
+                                   value={searchParams.startOffset} onChange={e => searchParams.startOffset = +e.target.value}
+                                   disabled={searchParams.offsetOrigin != PartitionOffsetOrigin.Custom} />
                         }
                         {
                             searchParams.offsetOrigin == PartitionOffsetOrigin.Timestamp &&
@@ -286,10 +286,10 @@ export class TopicMessageView extends Component<TopicMessageViewProps> {
                 {/* Quick Search */}
                 <div className={styles.quickSearchWrapper}>
                     <Input placeholder="Quick Search" allowClear={true} size="middle"
-                        className={styles.quickSearchInput}
-                        value={uiState.topicSettings.quickSearch}
-                        onChange={e => uiState.topicSettings.quickSearch = this.messageSource.filterText = e.target.value}
-                        addonAfter={null} disabled={this.fetchError != null}
+                           className={styles.quickSearchInput}
+                           value={uiState.topicSettings.quickSearch}
+                           onChange={e => uiState.topicSettings.quickSearch = this.messageSource.filterText = e.target.value}
+                           addonAfter={null} disabled={this.fetchError != null}
                     />
                 </div>
 
@@ -451,7 +451,7 @@ export class TopicMessageView extends Component<TopicMessageViewProps> {
                         <div> {/* the additional div is necessary because popovers do not trigger on disabled elements, even on hover */}
                             <Dropdown disabled={!isClipboardAvailable} overlayClassName="disableAnimation" overlay={this.copyDropdown(record)} trigger={['click']}>
                                 <Button className="iconButton" style={{ height: '100%', width: '100%', verticalAlign: 'middle', pointerEvents: isClipboardAvailable ? 'auto' : 'none' }} type="link"
-                                    icon={<EllipsisOutlined style={{ fontSize: '32px', display: 'flex', alignContent: 'center', justifyContent: 'center' }} />} size="middle" />
+                                        icon={<EllipsisOutlined style={{ fontSize: '32px', display: 'flex', alignContent: 'center', justifyContent: 'center' }} />} size="middle" />
                             </Dropdown>
                         </div>
                     </NoClipboardPopover>
@@ -856,18 +856,18 @@ class StartOffsetDateTimePicker extends Component {
         }
 
         return <DatePicker showTime={true} allowClear={false}
-            renderExtraFooter={() => <DateTimePickerExtraFooter />}
-            format={format}
-            value={current}
-            onChange={e => {
-                // console.log('onChange', { value: e?.format() ?? 'null', isLocal: e?.isLocal(), unix: e?.valueOf() });
-                searchParams.startTimestamp = e?.valueOf() ?? -1;
-                searchParams.startTimestampWasSetByUser = true;
-            }}
-            onOk={e => {
-                // console.log('onOk', { value: e.format(), isLocal: e.isLocal(), unix: e.valueOf() });
-                searchParams.startTimestamp = e.valueOf();
-            }}
+                           renderExtraFooter={() => <DateTimePickerExtraFooter />}
+                           format={format}
+                           value={current}
+                           onChange={e => {
+                               // console.log('onChange', { value: e?.format() ?? 'null', isLocal: e?.isLocal(), unix: e?.valueOf() });
+                               searchParams.startTimestamp = e?.valueOf() ?? -1;
+                               searchParams.startTimestampWasSetByUser = true;
+                           }}
+                           onOk={e => {
+                               // console.log('onOk', { value: e.format(), isLocal: e.isLocal(), unix: e.valueOf() });
+                               searchParams.startTimestamp = e.valueOf();
+                           }}
         />;
     }
 }
@@ -1115,8 +1115,8 @@ class ColumnSettings extends Component<{ getShowDialog: () => boolean, setShowDi
                         'Local Time': 'onlyTime',
                         'Unix Seconds': 'unixSeconds',
                     }}
-                        value={uiState.topicSettings.previewTimestamps}
-                        onChange={e => uiState.topicSettings.previewTimestamps = e}
+                                 value={uiState.topicSettings.previewTimestamps}
+                                 onChange={e => uiState.topicSettings.previewTimestamps = e}
                     />
                 </Space>
             </div>
@@ -1309,25 +1309,25 @@ class MessageSearchFilterBar extends Component {
             {/* Editor */}
             <Modal centered open={this.currentFilter != null}
                 //title='Edit Filter'
-                closable={false}
-                title={null}
-                onOk={() => this.currentFilter = null}
-                onCancel={() => this.currentFilter = null}
+                   closable={false}
+                   title={null}
+                   onOk={() => this.currentFilter = null}
+                   onCancel={() => this.currentFilter = null}
 
-                destroyOnClose={true}
+                   destroyOnClose={true}
                 // footer={null}
 
-                okText="Close"
-                cancelButtonProps={{ style: { display: 'none' } }}
-                maskClosable={true}
-                footer={<div style={{ display: 'flex', gap: '16px', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <div style={{ fontFamily: '"Open Sans", sans-serif', fontSize: '10.5px', color: '#828282' }}>
-                        Changes are saved automatically
-                    </div>
-                    <Button type="primary" onClick={() => this.currentFilter = null} >Close</Button>
-                </div>}
+                   okText="Close"
+                   cancelButtonProps={{ style: { display: 'none' } }}
+                   maskClosable={true}
+                   footer={<div style={{ display: 'flex', gap: '16px', alignItems: 'center', justifyContent: 'flex-end' }}>
+                       <div style={{ fontFamily: '"Open Sans", sans-serif', fontSize: '10.5px', color: '#828282' }}>
+                           Changes are saved automatically
+                       </div>
+                       <Button type="primary" onClick={() => this.currentFilter = null} >Close</Button>
+                   </div>}
 
-                bodyStyle={{ paddingTop: '18px', paddingBottom: '12px', display: 'flex', gap: '12px', flexDirection: 'column' }}
+                   bodyStyle={{ paddingTop: '18px', paddingBottom: '12px', display: 'flex', gap: '12px', flexDirection: 'column' }}
             >
                 {this.currentFilter && <>
 
@@ -1341,8 +1341,8 @@ class MessageSearchFilterBar extends Component {
                             fontFamily: '"Open Sans", sans-serif',
                             fontSize: '73%',
                         }}
-                            danger type="dashed" size="small"
-                            onClick={() => this.revertChanges()}
+                                danger type="dashed" size="small"
+                                onClick={() => this.revertChanges()}
                         >
                             Revert Changes
                         </Button>
@@ -1446,7 +1446,6 @@ function copyMessage(record: TopicMessage, field: 'jsonKey' | 'jsonValue' | 'tim
         // empty
     }
 }
-
 function createPublishRecordsModal(parent: TopicMessageView) {
     return createAutoModal({
         modalProps: {
@@ -1463,14 +1462,22 @@ function createPublishRecordsModal(parent: TopicMessageView) {
             maskClosable: false,
         },
         onCreate: (showArg: { topicName: string; }) => {
+            let customMessage = '{"id": "1111", "name": "UK territory"}'
+            if(uiState.topicSettings.produceCustomMessage == 'ukTerritory'){
+                customMessage= '{"id": "1111", "name": "UK territory"}';
+            }else if(uiState.topicSettings.produceCustomMessage == 'itTerritory'){
+                customMessage= '{"id": "2222", "name": "IT territory"}';
+            }else if(uiState.topicSettings.produceCustomMessage == 'deTerritory'){
+                customMessage= '{"id": "3333", "name": "DE territory"}';
+            }
             return observable({
                 topics: [showArg.topicName],
                 partition: -1, // -1 = auto
                 compressionType: CompressionType.Uncompressed,
                 encodingType: uiState.topicSettings.produceRecordEncoding || 'json',
-
+                customMessageType: uiState.topicSettings.produceCustomMessage || 'ukTerritory',
                 key: '',
-                value: '',
+                value: customMessage,
                 headers: [{ key: '', value: '' }],
             } as PublishMessageModalProps['state']);
         },

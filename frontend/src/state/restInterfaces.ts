@@ -1300,6 +1300,13 @@ export type EncodingType =
     | 'json'   // parse the text as json, stringify it again to reduce whitespace, use utf8 to get bytes
 
 
+// For UI only
+export type CustomMessageType =
+    | 'ukTerritory'
+    | 'itTerritory'
+    | 'deTerritory'
+
+
 export interface PublishRecordsRequest {
     // TopicNames is a list of topic names into which the records shall be produced to.
     topicNames: string[];
