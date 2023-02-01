@@ -1,0 +1,22 @@
+{
+  "schemas": [
+    {
+      "name": "ukTerritory",
+      "label": "UK Territory",
+      "tooltip": "UK Territory",
+      "schema": "{\"id\": \"1111\", \"name\": \"UK territory\"}"
+    },
+    {
+      "name": "itTerritory",
+      "label": "IT Territory",
+      "tooltip": "IT Territory",
+      "schema": "{\"id\": \"2222\", \"name\": \"IT territory\"}"
+    },
+    {
+      "name": "deTerritory",
+      "label": "DE Territory",
+      "tooltip": "DE Territory",
+      "schema": "{\"id\": \"3333\", \"name\": \"DE territory\"}"
+    }
+  ]
+}

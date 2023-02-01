@@ -13,13 +13,14 @@ import {EditorProps, Monaco} from '@monaco-editor/react';
 import {Select, Tooltip} from 'antd';
 import {action, computed} from 'mobx';
 import {observer} from 'mobx-react';
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {api} from '../../../../state/backendApi';
 import {CompressionType, CustomMessageType, EncodingType} from '../../../../state/restInterfaces';
 import {Label} from '../../../../utils/tsxUtils';
 import KowlEditor, {IStandaloneCodeEditor} from '../../../misc/KowlEditor';
 import Tabs, {Tab} from '../../../misc/tabs/Tabs';
 import HeadersEditor from './Headers';
+import CustomMessageSelect from './CustomMessages';
 
 
 type Props = {
@@ -60,20 +61,24 @@ const encodingOptions: EncodingOption[] = [
     {value: 'json', label: 'JSON', tooltip: 'Syntax higlighting for JSON, otherwise the same as raw'},
 ];
 
-type CustomMessageOption = {
+/*type CustomMessageOption = {
     value: CustomMessageType,
     label: string,
     tooltip: string, // React.ReactNode | (() => React.ReactNode),
-};
+};*/
 
+/*
 const customMessageOptions: CustomMessageOption[] = [
     {value: 'ukTerritory', label: 'UK Territory', tooltip: 'UK Territory'},
     {value: 'itTerritory', label: 'IT Territory', tooltip: 'IT Territory'},
     {value: 'deTerritory', label: 'DE Territory', tooltip: 'DE Territory'},
 ];
+*/
 
 @observer
 export class PublishMessagesModalContent extends Component<Props> {
+
+
     availableCompressionTypes = Object.entries(CompressionType).map(([label, value]) => ({
         label,
         value
@@ -141,31 +146,7 @@ export class PublishMessagesModalContent extends Component<Props> {
                             </Select.Option>)}
                     </Select>
                 </Label>
-                <Label text="Custom Messages" >
-                    <Select<CustomMessageType> disabled={ this.props.state.encodingType != 'json'} value={this.props.state.customMessageType}
-                                               onChange={(v) => {
-                                                   this.props.state.customMessageType = v;
-                                                   if ( this.props.state.customMessageType == 'ukTerritory') {
-                                                       this.props.state.value = '{"id": "1111", "name": "UK territory"}';
-                                                   } else if (this.props.state.customMessageType == 'itTerritory') {
-                                                       this.props.state.value = '{"id": "2222", "name": "IT territory"}';
-                                                   } else if (this.props.state.customMessageType == 'deTerritory') {
-                                                       this.props.state.value = '{"id": "3333", "name": "DE territory"}';
-                                                   }
-
-                                                   if(this.props.state.encodingType!= 'json'){
-                                                       this.props.state.value = '';
-                                                   }
-                                               }}
-                                               style={{minWidth: '150px'}} virtual={false}>
-                        {customMessageOptions.map(x =>
-                            <Select.Option key={x.value} value={x.value}>
-                                <Tooltip overlay={x.tooltip} mouseEnterDelay={0} mouseLeaveDelay={0} placement="right">
-                                    <div>{x.label}</div>
-                                </Tooltip>
-                            </Select.Option>)}
-                    </Select>
-                </Label>
+                <CustomMessageSelect state={this.props.state}/>
             </div>
 
             <Tabs tabs={this.tabs} defaultSelectedTabKey="value"
