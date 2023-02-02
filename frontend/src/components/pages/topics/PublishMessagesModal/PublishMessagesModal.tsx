@@ -13,7 +13,7 @@ import {EditorProps, Monaco} from '@monaco-editor/react';
 import {Select, Tooltip} from 'antd';
 import {action, computed} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {api} from '../../../../state/backendApi';
 import {CompressionType, CustomMessageType, EncodingType} from '../../../../state/restInterfaces';
 import {Label} from '../../../../utils/tsxUtils';
@@ -23,7 +23,7 @@ import HeadersEditor from './Headers';
 import CustomMessageSelect from './CustomMessages';
 
 
-type Props = {
+export type Props = {
     state: {
         topics: string[];
         partition: number;
@@ -74,6 +74,17 @@ const customMessageOptions: CustomMessageOption[] = [
     {value: 'deTerritory', label: 'DE Territory', tooltip: 'DE Territory'},
 ];
 */
+function Parent(props: Props) {
+    const [value, setValue] = React.useState('');
+
+    function handleChange(newValue: string) {
+        setValue(newValue);
+    }
+
+    let newValue: string = props.state.value;
+    // We pass a callback to Child
+    return <CustomMessageSelect state={props.state} setValue={'a'}/>;
+}
 
 @observer
 export class PublishMessagesModalContent extends Component<Props> {
@@ -85,6 +96,7 @@ export class PublishMessagesModalContent extends Component<Props> {
     })).filter(t => t.value != CompressionType.Unknown);
 
     render() {
+
         return <div className="publishMessagesModal">
 
             <div style={{display: 'flex', gap: '1em', flexWrap: 'wrap'}}>
@@ -146,7 +158,6 @@ export class PublishMessagesModalContent extends Component<Props> {
                             </Select.Option>)}
                     </Select>
                 </Label>
-                <CustomMessageSelect state={this.props.state}/>
             </div>
 
             <Tabs tabs={this.tabs} defaultSelectedTabKey="value"
@@ -157,6 +168,7 @@ export class PublishMessagesModalContent extends Component<Props> {
             />
         </div>;
     }
+
 
     @computed get availableTopics() {
         return api.topics?.map(t => ({value: t.topicName})) ?? [];

@@ -48,12 +48,13 @@ interface State {
 }
 
 
-export interface Props {
+export interface Properties {
     state: State;
+    setValue: (arg: string) => void
 }
 
 
-const CustomMessageSelect = observer((p: Props): JSX.Element => {
+const CustomMessageSelect = observer((p: Properties): JSX.Element => {
 
     return <Label text="Custom Messages">
         <Select<CustomMessageType> disabled={p.state.encodingType != 'json'} value={p.state.customMessageType}
