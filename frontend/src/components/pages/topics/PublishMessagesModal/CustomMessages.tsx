@@ -13,6 +13,7 @@ import {Select, Tooltip} from 'antd';
 import {observer} from 'mobx-react';
 import {CompressionType, CustomMessageType, EncodingType} from '../../../../state/restInterfaces';
 import {Label} from '../../../../utils/tsxUtils';
+import {uiState} from '../../../../state/uiState';
 
 
 interface CustomMessage {
@@ -24,6 +25,7 @@ interface CustomMessage {
 
 
 const customMessageOptions: CustomMessage[] = [
+    {value: 'none', label: 'Choose message', tooltip: 'Choose message'},
     {value: 'ukTerritory', label: 'UK Territory', tooltip: 'UK Territory'},
     {value: 'itTerritory', label: 'IT Territory', tooltip: 'IT Territory'},
     {value: 'deTerritory', label: 'DE Territory', tooltip: 'DE Territory'},
@@ -50,17 +52,19 @@ interface State {
 
 export interface Properties {
     state: State;
-    setValue: (arg: string) => void
 }
 
 
 const CustomMessageSelect = observer((p: Properties): JSX.Element => {
 
     return <Label text="Custom Messages">
-        <Select<CustomMessageType> disabled={p.state.encodingType != 'json'} value={p.state.customMessageType}
+        <Select<CustomMessageType> disabled={p.state.encodingType != 'customMessage'} value={p.state.customMessageType}
                                    onChange={(v) => {
                                        p.state.customMessageType = v;
-                                       if (p.state.customMessageType == 'ukTerritory') {
+                                       if (p.state.customMessageType == 'none') {
+                                           p.state.value = '';
+                                       }
+                                       else if (p.state.customMessageType == 'ukTerritory') {
                                            p.state.value = '{"id": "1111", "name": "UK territory"}';
                                        } else if (p.state.customMessageType == 'itTerritory') {
                                            p.state.value = '{"id": "2222", "name": "IT territory"}';
@@ -68,9 +72,10 @@ const CustomMessageSelect = observer((p: Properties): JSX.Element => {
                                            p.state.value = '{"id": "3333", "name": "DE territory"}';
                                        }
 
-                                       if (p.state.encodingType != 'json') {
+                                       if (p.state.encodingType != 'customMessage') {
                                            p.state.value = '';
                                        }
+                                       uiState.messageValue = p.state.value
                                    }
 
                                    }

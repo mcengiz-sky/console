@@ -1493,6 +1493,7 @@ function createPublishRecordsModal(parent: TopicMessageView) {
                 'base64': x => x.trim(),
                 'json': x => encodeBase64(x.trim()),
                 'utf8': x => encodeBase64(x),
+                'customMessage': x => encodeBase64(x.trim()),
             };
             const value = convert[state.encodingType](state.value);
 

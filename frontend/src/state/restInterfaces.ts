@@ -1298,10 +1298,12 @@ export type EncodingType =
     | 'utf8'   // use text as it is, use utf8 to get bytes
     | 'base64' // text is base64, so server should just use base64decode to get the bytes
     | 'json'   // parse the text as json, stringify it again to reduce whitespace, use utf8 to get bytes
+    | 'customMessage'   // set custom message
 
 
 // For UI only
 export type CustomMessageType =
+    | 'none'
     | 'ukTerritory'
     | 'itTerritory'
     | 'deTerritory'

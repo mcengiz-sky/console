@@ -13,15 +13,15 @@ import {EditorProps, Monaco} from '@monaco-editor/react';
 import {Select, Tooltip} from 'antd';
 import {action, computed} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {api} from '../../../../state/backendApi';
 import {CompressionType, CustomMessageType, EncodingType} from '../../../../state/restInterfaces';
 import {Label} from '../../../../utils/tsxUtils';
 import KowlEditor, {IStandaloneCodeEditor} from '../../../misc/KowlEditor';
 import Tabs, {Tab} from '../../../misc/tabs/Tabs';
 import HeadersEditor from './Headers';
-import CustomMessageSelect from './CustomMessages';
-
+import CustomMessages from './CustomMessages';
+import {uiState} from '../../../../state/uiState';
 
 export type Props = {
     state: {
@@ -59,36 +59,11 @@ const encodingOptions: EncodingOption[] = [
         tooltip: 'Message value is binary, represented as a base64 string in the editor'
     },
     {value: 'json', label: 'JSON', tooltip: 'Syntax higlighting for JSON, otherwise the same as raw'},
+    {value: 'customMessage', label: 'Custom Message', tooltip: 'Custom Message'},
 ];
-
-/*type CustomMessageOption = {
-    value: CustomMessageType,
-    label: string,
-    tooltip: string, // React.ReactNode | (() => React.ReactNode),
-};*/
-
-/*
-const customMessageOptions: CustomMessageOption[] = [
-    {value: 'ukTerritory', label: 'UK Territory', tooltip: 'UK Territory'},
-    {value: 'itTerritory', label: 'IT Territory', tooltip: 'IT Territory'},
-    {value: 'deTerritory', label: 'DE Territory', tooltip: 'DE Territory'},
-];
-*/
-function Parent(props: Props) {
-    const [value, setValue] = React.useState('');
-
-    function handleChange(newValue: string) {
-        setValue(newValue);
-    }
-
-    let newValue: string = props.state.value;
-    // We pass a callback to Child
-    return <CustomMessageSelect state={props.state} setValue={'a'}/>;
-}
 
 @observer
 export class PublishMessagesModalContent extends Component<Props> {
-
 
     availableCompressionTypes = Object.entries(CompressionType).map(([label, value]) => ({
         label,
@@ -97,7 +72,7 @@ export class PublishMessagesModalContent extends Component<Props> {
 
     render() {
 
-        return <div className="publishMessagesModal">
+        const page = <div className="publishMessagesModal">
 
             <div style={{display: 'flex', gap: '1em', flexWrap: 'wrap'}}>
                 <Label text="Topics">
@@ -140,10 +115,10 @@ export class PublishMessagesModalContent extends Component<Props> {
                     <Select<EncodingType> value={this.props.state.encodingType}
                                           onChange={(v, d) => {
                                               this.props.state.encodingType = v;
-                                              if(this.props.state.encodingType!= 'json'){
+                                              if(this.props.state.encodingType!= 'customMessage'){
                                                   this.props.state.value = '';
                                               }
-                                              if(this.props.state.encodingType == 'json'){
+                                              if(this.props.state.encodingType == 'customMessage'){
                                                   this.props.state.customMessageType = 'ukTerritory'
                                                   this.props.state.value = '{"id": "1111", "name": "UK territory"}';
                                               }
@@ -158,6 +133,7 @@ export class PublishMessagesModalContent extends Component<Props> {
                             </Select.Option>)}
                     </Select>
                 </Label>
+                <CustomMessages state={this.props.state} />
             </div>
 
             <Tabs tabs={this.tabs} defaultSelectedTabKey="value"
@@ -167,6 +143,9 @@ export class PublishMessagesModalContent extends Component<Props> {
                   contentStyle={{display: 'flex', flexDirection: 'column', flexGrow: 1}}
             />
         </div>;
+        this.props.state.value = uiState.messageValue;
+
+        return page;
     }
 
 

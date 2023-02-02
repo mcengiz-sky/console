@@ -26,6 +26,7 @@ class UIState {
         makeObservable(this);
     }
 
+    @observable public messageValue: string = ' '
 
     @observable private _pageTitle: string = ' '
     @computed get pageTitle() { return this._pageTitle; }
